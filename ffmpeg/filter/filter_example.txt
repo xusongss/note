@@ -1,0 +1,21 @@
+@1
+#在摄像头画面上添加tail.mp4，并设置tail.mp4的透明效果
+#tail.mp4的透明效果 是通过tail.mp4的Y分量扩展成alpha分量，也就是说tail.mp4亮度越暗，该像素越透明
+./ffmpeg -f video4linux2   -s 720x576  -i /dev/video0   -vcodec libx264 -r 30  -pix_fmt yuv420p  -profile:v baseline  -preset veryfast -x264-params "slices=20" -x264opts opencl  -vf "
+movie=filename=/home/xuss/tail.mp4:loop=200:stream_index=0,setpts=N/(25*TB)[logo];
+[logo] split [logo1][logozz];
+[logo1][logozz]alphamerge[out];
+[main][out]overlay=main_w-overlay_w-480:0"  -f mpegts udp://192.168.6.92:8080 
+@2
+# 将@1输出分成两路，一路用来统计YUV分布，并形成直方图，最后将两路合成输出
+./ffmpeg -f video4linux2   -s 720x576  -i /dev/video0   -vcodec libx264 -r 30  -pix_fmt yuv420p  -profile:v baseline  -preset veryfast -x264-params "slices=20" -x264opts opencl  -vf "
+movie=filename=/home/xuss/tail.mp4:loop=200000:stream_index=0,scale=720:576, setpts=N/(25*TB)[logo];
+[logo] split [logo1][logozz];
+[logo1][logozz]alphamerge[out];
+[main][out]overlay=0:0, split [main1] [main2];
+[main2]histogram, scale=200:576[his];
+[main1][his]overlay=0:0"  -f mpegts udp://192.168.6.92:8080 
+
+@3
+#生产fj.mp3的cqt频谱视频
+ffplay -f lavfi 'amovie=fj.mp3,showcqt=fps=30:count=5'
