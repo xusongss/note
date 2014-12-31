@@ -19,3 +19,6 @@ movie=filename=/home/xuss/tail.mp4:loop=200000:stream_index=0,scale=720:576, set
 @3
 #生产fj.mp3的cqt频谱视频
 ffplay -f lavfi 'amovie=fj.mp3,showcqt=fps=30:count=5'
+@4
+#生产/dev/dsp1的cqt频谱视频
+ffplay -f lavfi 'amovie=/dev/dsp1:oss,showcqt=fps=30:count=5'
