@@ -8,13 +8,10 @@ movie=filename=/home/xuss/tail.mp4:loop=200:stream_index=0,setpts=N/(25*TB)[logo
 [main][out]overlay=main_w-overlay_w-480:0"  -f mpegts udp://192.168.6.92:8080 
 @2
 # 将@1输出分成两路，一路用来统计YUV分布，并形成直方图，最后将两路合成输出
-./ffmpeg -f video4linux2   -s 720x576  -i /dev/video0   -vcodec libx264 -r 30  -pix_fmt yuv420p  -profile:v baseline  -preset veryfast -x264-params "slices=20" -x264opts opencl  -vf "
-movie=filename=/home/xuss/tail.mp4:loop=200000:stream_index=0,scale=720:576, setpts=N/(25*TB)[logo];
-[logo] split [logo1][logozz];
-[logo1][logozz]alphamerge[out];
-[main][out]overlay=0:0, split [main1] [main2];
-[main2]histogram, scale=200:576[his];
-[main1][his]overlay=0:0"  -f mpegts udp://192.168.6.92:8080 
+./ffmpeg -f video4linux2   -s 720x576  -i /dev/video0   -vcodec libx264 -r 30  -pix_fmt yuv420p  -profile:v baseline  -preset veryfast -x264-params "slices=20" -x264opts opencl  -vf "movie=filename=/home/xuss/tail.mp4:loop=200000:stream_index=0,scale=720:576, setpts=N/(25*TB)[logo];[logo] split [logo1][logozz];[logo1][logozz]alphamerge[out];[main][out]overlay=0:0, split [main1] [main2];[main2]histogram, scale=200:576[his];[main1][his]overlay=0:0"  -f mpegts udp://192.168.6.92:8080 
+
+echo "movie=filename=/home/xuss/tail.mp4:loop=200000:stream_index=0,scale=720:576, setpts=N/(25*TB)[logo];[logo] split [logo1][logozz];[logo1][logozz]alphamerge[out];nullsrc, [out]overlay=0:0, split [main1] [main2];[main2]histogram, scale=200:576[his];[main1][his]overlay=0:0,nullsink" |./graph2dot -o graph.tmp && dot -Tpng graph.tmp -o graph.png 
+
 
 @3
 #生产fj.mp3的cqt频谱视频
@@ -22,3 +19,13 @@ ffplay -f lavfi 'amovie=fj.mp3,showcqt=fps=30:count=5'
 @4
 #生产/dev/dsp1的cqt频谱视频
 ffplay -f lavfi 'amovie=/dev/dsp1:oss,showcqt=fps=30:count=5'
+
+@5
+#波形
+ffplay -f lavfi "aevalsrc=sin(4*PI*t), showwaves"
+
+@6
+./ffmpeg -f video4linux2   -s 720x576  -i /dev/video0   -i /home/xuss/opt/note/ffmpeg/material/ts.mpg -vcodec libx264 -r 30  -pix_fmt yuv420p  -profile:v baseline  -preset veryfast -x264-params "slices=20" -x264opts opencl -filter_complex "[0:v][1:v]overlay=0:0" -f mpegts udp://192.168.6.92:8080  -v 48
+
+//ffmpeg 系列文章
+http://blog.csdn.net/fanbird2008/article/category/1435040/2

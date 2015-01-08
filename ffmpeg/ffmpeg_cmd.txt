@@ -1,0 +1,45 @@
+@1
+./ffmpeg   -i ../note/ffmpeg/material/ts.mpg  -i ../note/ffmpeg/material/tail.mp4 -c:v copy -c:a copy -map 0:0 -map 0:1   -f mpegts -y ~/opt/test.ts  -map 1:0 -c:v copy -c:a copy -bsf h264_mp4toannexb  -y -f mpegts ~/opt/test1.ts
+
+ffmpeg内部使用流索引来定位基础流，多个输入文件的多个基础流，被顺序组织到数组中，在没有使用map参数时，每一路输出，从顺序的基础流数组中寻找一路音频一路视频一路字幕进行codec处理
+map 可以进行输入输出基础流映射
+
+AVFilterPad:filter_frame request_frame
+
+@wiki
+https://trac.ffmpeg.org/
+
+@
+./configure --enable-libass --enable-libopencv --enable-libx264  --enable-gpl
+
+ffplay 输出宏块 运动等信息
+-debug vis_mb_type -vismv pf
+#一个音视频开源代码
+https://github.com/sourcey/libsourcey
+
+-dumpgraph 1
+
+#zmq动态修改filter参数
+./ffplay -dumpgraph 1 -f lavfi "color=s=200x400:c=red  [l];color=s=200x400:c=blue [r];nullsrc=s=400x400, zmq [bg];[bg][l]   overlay      [bg+l];[bg+l][r] overlay=x=200 "
+echo Parsed_color_0 c yellow | tools/zmqsend
+echo Parsed_color_1 c pink | tools/zmqsend
+
+直接播放摄像头
+ffplay -video4linux2 -framerate 30 -video_size 400x400 /dev/video0 -vf "vflip,format=8"
+
+视频编解码学习之三
+http://www.cnblogs.com/xkfz007/archive/2012/07/29/2614250.html
+
+http://stuff.onse.fi/man?program=ffmpeg-devices&section=1
+
+
+h264探秘
+http://my.oschina.net/ljbiss/blog/163904
+
+数据重排
+http://m.blog.chinaunix.net/uid-26606708-id-3079588.html
+
+
+
+
+

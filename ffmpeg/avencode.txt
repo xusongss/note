@@ -1,0 +1,5 @@
+常见的无损压缩方法：
+	比特平面编码，行程编码（游程编码，RLE），哈夫曼编码（huffman），LZW（lempel_ziv_welch）编码，算术编码，LZ78编码，无损预测编码
+	http://www.cnblogs.com/xkfz007/archive/2012/07/29/2614250.html
+H264 CAVAL编码
+http://wuyuans.com/2012/11/dct2/
