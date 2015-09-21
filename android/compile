@@ -32,3 +32,8 @@ dpkg --print-foreign-architectures
 sudo dpkg --add-architecture i386
 sudo apt-get update
 sudo apt-get dist-upgrade
+
+
+
+下载源代码：https://source.android.com/source/downloading.html
+配置编译：https://source.android.com/source/initializing.html
