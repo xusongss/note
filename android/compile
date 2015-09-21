@@ -1,1 +1,34 @@
 需要安装 bison flex libxml2-utils xsltproc g++-multilib  gperf libswitch-perl
+
+mkimage libncurses5-dev automake libtools
+
+
+如题，ubuntu14.04-64位编译linux内核时出现问题：error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory.
+解决方法：很明显就是安装这个库所在包咯，可是我们怎么这知道 libz.so.1在哪个包呢？ 
+我们使用命令： apt-file search 来查找，首先安装，按如下命令：
+1	sudo apt-get install apt-file
+安装完以后系统会提示你update，如果没有提示，在终端输入如下命令：
+1	sudo apt-file update
+apt-file 是用来查找某个命令或者某一个库所在的包的，具体用法如下：
+01	:~$ apt-file search libz.so.1
+02	lib32z1: /usr/lib32/libz.so.1
+03	lib32z1: /usr/lib32/libz.so.1.2.3.3
+04	lib32z1-dev: /usr/lib32/libz.so
+05	lsb-build-base3: /usr/lib/lsb3/libz.so
+06	zlib1g: /lib/libz.so.1
+07	zlib1g: /lib/libz.so.1.2.3.3
+08	zlib1g-dbg: /usr/lib/debug/lib/libz.so.1.2.3.3
+09	zlib1g-dbg: /usr/lib/debug/usr/lib32/libz.so.1.2.3.3
+10	zlib1g-dev: /usr/lib/libz.so
+使用apt-file search 查找你的库所在包就行了，右边的是匹配你的库，左边的是你查的库所在的包，所以最后安装对应的包就行了。
+1 sudo apt-get install lib32z1	如果只为解决问题，只需上面这一条命令就ok了！
+
+
+
+
+还用ia32-libs使64位支持32位软件，是不是有点过时了。
+现在只要
+dpkg --print-foreign-architectures
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get dist-upgrade

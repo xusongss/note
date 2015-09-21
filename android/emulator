@@ -1,0 +1,22 @@
+export ANDROID_PRODUCT_OUT=~/code/android-4.2/out/target/product/generic
+export ANDROID_SWT=~/code/android-4.2/out/host/linux-x86/framework/
+
+export PATH=$PATH:~/Android/out/host/linux-x86/bin
+
+
+emulator -system ./system.img  -data ./userdata.img -ramdisk ramdisk.img -kerne ../kernel.img
+
+	emulator: ERROR: You did not specify a virtual device name, and the system
+	directory could not be found.
+
+	If you are an Android SDK user, please use '@<name>' or '-avd <name>'
+	to start a given virtual device (see -help-avd for details).
+
+	Otherwise, follow the instructions in -help-disk-images to start the emulator
+
+ android create avd -n test2 -f -p /home/thonatos/test -t 1
+
+
+
+
+http://blog.163.com/aaron_ton/blog/static/2076530402012514215197/
