@@ -20,3 +20,7 @@ emulator -system ./system.img  -data ./userdata.img -ramdisk ramdisk.img -kerne 
 
 
 http://blog.163.com/aaron_ton/blog/static/2076530402012514215197/
+http://blog.csdn.net/luoshengyang/article/details/8923485
+
+
+./tools/emulator -system system-images/android-15/armeabi-v7a/system.img   -data system-imag/android-15/armeabi-v7a/userdata.img -ramdisk system-images/android-15/armeabi-v7a/ramdisk.img -kernel system-images/android-15/armeabi-v7a/kernel-qemu -avd test2
