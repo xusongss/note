@@ -37,3 +37,5 @@ sudo apt-get dist-upgrade
 
 下载源代码：https://source.android.com/source/downloading.html
 配置编译：https://source.android.com/source/initializing.html
+
+编译系统学习文章：https://www.ibm.com/developerworks/cn/opensource/os-cn-android-build/
