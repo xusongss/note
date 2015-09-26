@@ -3,6 +3,17 @@
 mkimage libncurses5-dev automake libtools
 
 
+    sudo apt-get install git-core gnupg flex bison gperf build-essential \
+
+      zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \
+
+      libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \
+
+      libgl1-mesa-dev g++-multilib mingw32 tofrodos \
+
+      python-markdown libxml2-utils xsltproc zlib1g-dev:i386
+
+
 如题，ubuntu14.04-64位编译linux内核时出现问题：error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory.
 解决方法：很明显就是安装这个库所在包咯，可是我们怎么这知道 libz.so.1在哪个包呢？ 
 我们使用命令： apt-file search 来查找，首先安装，按如下命令：
