@@ -24,3 +24,6 @@ http://blog.csdn.net/luoshengyang/article/details/8923485
 
 
 ./tools/emulator -system system-images/android-15/armeabi-v7a/system.img   -data system-imag/android-15/armeabi-v7a/userdata.img -ramdisk system-images/android-15/armeabi-v7a/ramdisk.img -kernel system-images/android-15/armeabi-v7a/kernel-qemu -avd test2
+
+
+NDK apk  http://blog.csdn.net/sodino/article/details/39526731
